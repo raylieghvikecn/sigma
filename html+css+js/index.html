@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no"/>
+<title>sigma</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<!-- Vue -->
+<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script> 
+<!-- Wilddog -->
+<script src="https://cdn.wilddog.com/sdk/js/2.0.0/wilddog.js"></script> 
+<!-- WildVue -->
+<script src="./wildvue.min.js"></script>
+</head>
+<body>
+<div id="demo">
+	<pre>{{ anObject.name }}</pre>
+	<ul>
+		<li v-for="item in name">
+			<span>{{ item.name }}</span>
+			<ul>
+				<li v-for="item1 in item.arr">{{item1}}</div>
+			</ul>
+		</li>
+	</ul>
+</div>
+<script>
+var wilddogApp = wilddog.initializeApp({
+	syncURL: "https://helloworldsigma33.wilddogio.com"
+});
+var sync = wilddogApp.sync();
+var ref =  sync.ref();
+
+var vm = new Vue({
+	el: '#demo',
+	wilddog: {
+		//简单语法
+		//默认作为数组绑定
+		name: sync.ref('anArray'),
+		// 也可以绑定一个查询
+		// anArray: sync.ref('url/to/my/collection').limitToLast(25)
+		// 完整语法
+		anObject: {
+			source: sync.ref('anObject'),
+			// 可选，作为对象绑定
+			asObject: true,
+			// 可选，提供一个回调
+			// cancelCallback: function () {}
+		}
+	}
+});
+</script>
+</body>
+</html>
