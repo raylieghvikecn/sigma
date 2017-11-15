@@ -2,18 +2,22 @@
 	"type": "date",
 	"list": [{
 		"date": "23:00:00",
-		"status": "1"
+		"setStatus": "1",
+		"isExecuted": "0"
 	},{
 		"date": "22:00:00",
-		"status": "0"
+		"setStatus": "0",
+		"isExecuted": "0"
 	}]
 }, {
 	"type": "date",
 	"list": [{
 		"date": "23:00:00",
-		"status": "1"
+		"setStatus": "0",
+		"isExecuted": "0"
 	},{
 		"date": "22:00:00",
-		"status": "0"
+		"setStatus": "1",
+		"isExecuted": "0"
 	}]
 }]
