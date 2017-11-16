@@ -1,23 +1,44 @@
-[{
-	"type": "date",
-	"list": [{
-		"date": "23:00:00",
-		"setStatus": "1",
-		"isExecuted": "0"
-	},{
-		"date": "22:00:00",
-		"setStatus": "0",
-		"isExecuted": "0"
-	}]
-}, {
-	"type": "date",
-	"list": [{
-		"date": "23:00:00",
-		"setStatus": "0",
-		"isExecuted": "0"
-	},{
-		"date": "22:00:00",
-		"setStatus": "1",
-		"isExecuted": "0"
-	}]
-}]
+{
+	"swtich": "1",
+	"points": [{
+		"type": "date",
+		"data": "20171115090000",
+		"form": "YYYYMMDDHHmmSS",
+		"set": "1"
+	}, {
+		"type": "date",
+		"data": "20171115090000",
+		"form": "YYYYMMDDHHmmSS",
+		"set": "1"
+	}, {
+		"type": "date",
+		"data": "20171115090000",
+		"form": "YYYYMMDDHHmmSS",
+		"set": "1"
+	}, {
+		"type": "date",
+		"data": "20171115090000",
+		"form": "YYYYMMDDHHmmSS",
+		"set": "1"
+	}, {
+		"type": "date",
+		"data": "20171115090000",
+		"form": "YYYYMMDDHHmmSS",
+		"set": "1"
+	}],
+	"ref": [
+		[0,3,4],
+		[1,2,4]
+	]
+}
+// {
+// 	"type": "time",
+// 	"data": "0900",
+// 	"form": "mmSS",
+// 	"set": "1"
+// }, {
+// 	"type": "day",
+// 	"data": "Mon230000",
+// 	"form": "dddHHmmSS",
+// 	"set": "1"
+// }
