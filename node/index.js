@@ -1,14 +1,17 @@
-var wilddog = require('wilddog');
-var initjson = require('./init.json');
+var data = require('./json/data.json');
+var array2map = require('./utils/array2map');
 
-var config = {
-	syncURL: "https://helloworldsigma33.wilddogio.com" //输入节点 URL
-};
-wilddog.initializeApp(config);
-var ref = wilddog.sync().ref();
+var database = {
+	switch: "1",
+	current: "",
+	data: array2map(data),
+	date: {}
+}
 
-ref.child("list").set(initjson);
+var ref = require('./utils/wilddogRef');
 
-ref.child("list/1").on("value", function(snapshot) {
+ref.set(database);
+
+ref.on("value", function(snapshot) {
     console.log(snapshot.val());
 });
