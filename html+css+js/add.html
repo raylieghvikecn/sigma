@@ -6,23 +6,6 @@
 <title>sigma</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<style>
-.page-tag {
-	display: flex; border: solid 1px blue;
-}
-.page-tag input {
-	display: none;
-}
-.page-tag label {
-	flex-basis: 100%; text-align: center;
-}
-.page-tag input + label {
-	color: blue; background-color: white;
-}
-.page-tag input:checked + label {
-	color: white; background-color: blue;
-}
-</style>
 <!-- Vue -->
 <script src="./lib/vue.js"></script> 
 <!-- Wilddog -->
@@ -34,20 +17,7 @@
 </head>
 <body>
 <div id="demo">
-	<div class="page-tag">
-		<input type="radio" id="tag1" name="tag" v-model="tag" value="time">
-		<label for="tag1">标签1</label>
-		<input type="radio" id="tag2" name="tag" v-model="tag" value="date">
-		<label for="tag2">标签2</label>
-		<input type="radio" id="tag3" name="tag" v-model="tag" value="per">
-		<label for="tag3">标签3</label>
-		<input type="radio" id="tag4" name="tag" v-model="tag" value="test">
-		<label for="tag4">标签4</label>
-	</div>
-	<pre>{{switchs}}</pre>
-	<ul><li v-for="item in points">
-		<pre>{{item.data}}</pre>
-	</li></ul>
+	<h3>添加情景</h3>
 </div>
 <script>
 var wilddogApp = wilddog.initializeApp({
@@ -62,7 +32,7 @@ var vm = new Vue({
 	},
 	wilddog: {
 		points: sync.ref('points'), //默认作为数组绑定;也可以绑定一个查询,anArray:sync.ref('url/to/my/collection').limitToLast(25)
-		// scenes: sync.ref('scenes'), 
+		scenes: sync.ref('scenes'), 
 		switchs: { //完整语法
 			source: sync.ref('switchs'),
 			asObject: true, //可选,作为对象绑定
@@ -70,6 +40,8 @@ var vm = new Vue({
 		}
 	}
 });
+
+vm.$wilddogRefs.points.push({"type": "date", "form": "YYYYMMDDHHmmSS", "data": "20171120111111", "set": "1"});
 </script>
 </body>
 </html>
