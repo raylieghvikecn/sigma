@@ -1,8 +1,9 @@
-// 将Object和Array转为md5
+var str2md5 = require('./str2md5.js');
 
-var crypto = require('crypto');
-
-module.exports = function obj2md5(obj) {
-    var md5 = crypto.createHash('md5');
-    return md5.update(obj).digest('hex');
+module.exports = function(obj) {
+	var temp = "";
+	for (var key in obj) {
+		temp += obj[key] + "";
+	}
+	return str2md5(temp);
 }
