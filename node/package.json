@@ -3,6 +3,7 @@
     "wilddog": "^2.5.17"
   },
   "scripts": {
-    "index": "node index.js"
+    "index": "node index.js",
+    "init": "node init.js"
   }
 }

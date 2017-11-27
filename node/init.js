@@ -2,30 +2,59 @@ var ref = require('./utils/wilddogRef');
 
 ref.child('switchs').set({ status: 1, point: 0, scene: 0 });
 
-var points = require('./json/points.json');
-var points2 = require('./json/points2.json');
-// console.log(points2);
-var scenes = require('./json/scenes.json');
 var obj2md5 = require('./utils/obj2md5.js');
 
-var map = {};
-for(var i=0; i<points.length; i++) {
-	var md5 = obj2md5(points[i])
+function hasObjInMap(obj, map, callback) {
+	md5 = obj2md5(obj)
 	if(map[md5] == undefined) {
-		map[md5] = points[i];
+		callback(md5);
 	}
 }
-ref.child('points').set(map);
 
-ref.child('points').once('value').then(function(snapshot) {
-	var val = snapshot.val();
-	for(var i=0; i<points2.length; i++) {
-		var md5 = obj2md5(points2[i])
-		if(val[md5] == undefined) {
-			console.log(0);
-			ref.child('points/' + md5).set(points2[i]);
-		}
+var points = require('./json/points.json');
+var point2 = require('./json/point2.json');
+var scenes = require('./json/scenes.json');
+
+ref.once('value').then(function(snapshot) {
+	var value = snapshot.val();
+
+	var map = {};
+	var arr = [];
+	for(var i=0; i<points.length; i++) {
+		hasObjInMap(points[i], map, function(md5) {
+			map[md5] = points[i];
+			arr.push(md5);
+		});
 	}
-}).catch(function(err){
-	console.info(err);
+	ref.child('points').set(map);
+	ref.child('maparr').set(arr);
+	var mms = {};
+	for(var i=0; i<scenes.length; i++) {
+		hasObjInMap(scenes[i], map, function(md5) {
+			mms[md5] = scenes[i];
+		});
+	}
+	ref.child('scenes').set(mms);
+	
+	(function aaa(arr, index) {
+		ref.once('value').then(function(snapshot) {
+			if(index < arr.length) {
+				var value = snapshot.val();
+
+				var map = value.points;
+				var idx = value.maparr.length;
+				
+				hasObjInMap(arr[index], map, function(md5) {
+					ref.child('points/' + md5).set(arr[index]);
+					ref.child('maparr/' + idx).set(md5);
+				});
+				index++;
+				aaa(arr, index);
+			} 
+		}).catch(function(err){
+			console.info(err);
+		});;
+	})(point2, 0);
 });
+
+
