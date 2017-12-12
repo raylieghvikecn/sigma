@@ -44,16 +44,10 @@
 		<input type="radio" id="tag4" name="tag" v-model="tag" value="test">
 		<label for="tag4">标签4</label>
 	</div>
-	<pre>{{switchs}}</pre>
-	<ul><li v-for="item in points">
-		<pre>{{item.data}}</pre>
-	</li></ul>
 	<ul><li v-for="item1 in scenes">
 		<div>{{item1.name}}</div>
-		<ul><li v-for="item2 in item1.points">
-			<!-- <pre>{{maparr[item2]['.value']}}</pre> -->
-			<!-- <pre>{{points['.' + maparr[item2]['.value']]}}</pre> -->
-			<pre>{{item2}}</pre>
+		<ul><li v-for="item2 in item1.steps" v-on:click="getItem(item1);">
+			<pre>{{points[item2].point}}</pre>
 		</li></ul>
 	</li></ul>
 </div>
@@ -68,15 +62,23 @@ var vm = new Vue({
 	data: {
 		tag: 'time'
 	},
+	methods: {
+		getItem: function(item) {
+			alert(JSON.stringify(item));
+		}
+	},
 	wilddog: {
-		points: sync.ref('points'), //默认作为数组绑定;也可以绑定一个查询,anArray:sync.ref('url/to/my/collection').limitToLast(25)
-		scenes: sync.ref('scenes'),
-		maparr: sync.ref('maparr'), 
 		switchs: { //完整语法
 			source: sync.ref('switchs'),
 			asObject: true, //可选,作为对象绑定
 			cancelCallback: function () {} //可选,提供一个回调
-		}
+		},
+		points: {
+			source: sync.ref('points'),
+			asObject: true,
+			cancelCallback: function () {}
+		},
+		scenes: sync.ref('scenes'), //默认作为数组绑定;也可以绑定一个查询,anArray:sync.ref('url/to/my/collection').limitToLast(25)
 	}
 });
 </script>
