@@ -6,23 +6,6 @@
 <title>sigma</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<style>
-.page-tag {
-	display: flex; border: solid 1px blue;
-}
-.page-tag input {
-	display: none;
-}
-.page-tag label {
-	flex-basis: 100%; text-align: center;
-}
-.page-tag input + label {
-	color: blue; background-color: white;
-}
-.page-tag input:checked + label {
-	color: white; background-color: blue;
-}
-</style>
 <!-- Vue -->
 <script src="./lib/vue.js"></script> 
 <!-- Wilddog -->
@@ -31,30 +14,19 @@
 <script src="./lib/wildvue.min.js"></script>
 <!-- vue-router -->
 <script src="./lib/vue-router.min.js"></script>
-<!-- vue-router -->
+<!-- mui-css -->
 <link href="./lib/mui.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="demo">
-	<div class="page-tag">
-		<input type="radio" id="tag1" name="tag" v-model="tag" value="time">
-		<label for="tag1">标签1</label>
-		<input type="radio" id="tag2" name="tag" v-model="tag" value="date">
-		<label for="tag2">标签2</label>
-		<input type="radio" id="tag3" name="tag" v-model="tag" value="per">
-		<label for="tag3">标签3</label>
-		<input type="radio" id="tag4" name="tag" v-model="tag" value="test">
-		<label for="tag4">标签4</label>
-	</div>
 	<form class="mui-input-group">
 	    <div class="mui-input-row">
-	        <label>用户名</label>
+	        <label>情景名称</label>
 	    	<input type="text" class="mui-input-clear" placeholder="请输入用户名">
 	    </div>
-	    <div class="mui-input-row">
-	        <label>密码</label>
-	        <input type="password" class="mui-input-password" placeholder="请输入密码">
-	    </div>
+	    <div class="mui-button-row">
+			<button type="button" class="mui-btn mui-btn-primary" v-on:click="next();">下一步</button>
+		</div>
 	</form>
 </div>
 <script>
@@ -69,22 +41,9 @@ var vm = new Vue({
 		tag: 'time'
 	},
 	methods: {
-		getItem: function(item) {
+		next: function(item) {
 			alert(JSON.stringify(item));
 		}
-	},
-	wilddog: {
-		switchs: { //完整语法
-			source: sync.ref('switchs'),
-			asObject: true, //可选,作为对象绑定
-			cancelCallback: function () {} //可选,提供一个回调
-		},
-		points: {
-			source: sync.ref('points'),
-			asObject: true,
-			cancelCallback: function () {}
-		},
-		scenes: sync.ref('scenes'), //默认作为数组绑定;也可以绑定一个查询,anArray:sync.ref('url/to/my/collection').limitToLast(25)
 	}
 });
 </script>
