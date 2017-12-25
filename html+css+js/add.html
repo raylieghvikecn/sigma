@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="telephone=no" />
 <title>sigma</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -14,20 +14,66 @@
 <script src="./lib/wildvue.min.js"></script>
 <!-- vue-router -->
 <script src="./lib/vue-router.min.js"></script>
-<!-- mui-css -->
-<link href="./lib/mui.min.css" rel="stylesheet"/>
+<!-- tomd5 -->
+<script src="./lib/md5.js"></script>
+<style>
+body {
+	background-color: #f8f7f5;
+}
+.grid {display: flex;}
+.grid-cell {flex: 1;}
+.grid-cell.u-full {flex: 0 0 100%;}
+.grid-cell.u-1of2 {flex: 0 0 50%;}
+.grid-cell.u-1of3 {flex: 0 0 33.3333%;}
+.grid-cell.u-1of4 {flex: 0 0 25%;}
+.well-content {
+	background-color: white;
+    border-radius: 5px;
+    padding: .3rem;
+}
+.input-row label {}
+.input-row input {}
+.square {
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: .3rem;
+	background-color: #ccc;
+	display: inline-block;
+	line-height: 1.5rem;
+	text-align: center;
+	border-radius: 3px;
+}
+button {
+	width: 4rem;
+	background-color: #a1dafb;
+}
+</style>
 </head>
 <body>
 <div id="demo">
-	<form class="mui-input-group">
-	    <div class="mui-input-row">
-	        <label>情景名称</label>
-	    	<input type="text" class="mui-input-clear" placeholder="请输入用户名">
-	    </div>
-	    <div class="mui-button-row">
-			<button type="button" class="mui-btn mui-btn-primary" v-on:click="next();">下一步</button>
+	<div class="well-content">
+		<div class="grid input-row">
+			<label class="grid-cell u-1of4" for="sceneName">名称</label>
+			<input class="grid-cell" type="text" id="sceneName" placeholder="请输入名称">
 		</div>
-	</form>
+	</div>
+	<div class="grid input-row" v-for="(item,$index) in points">
+		<div class="grid-cell u-1of4">第{{$index}}步</div>
+		<input class="grid-cell" type="date" v-model="item.data">
+		<select name="switch" id="switch" v-model="item.set" :disabled="$index!=0||$index==0&&points.length>1">
+			<option value="1">开</option>
+			<option value="0">关</option>
+		</select>
+	</div>
+	<div style="text-align: center;">
+		<span class="square" v-on:click="add();">+</span>
+	</div>
+	<div style="text-align: center;">
+		<button v-on:click="submit();">提交</button>
+	</div>
+	<div class="grid input-row" v-for="item in points">
+		{{item.data}}
+	</div>
 </div>
 <script>
 var wilddogApp = wilddog.initializeApp({
@@ -38,11 +84,17 @@ var sync = wilddogApp.sync();
 var vm = new Vue({
 	el: '#demo',
 	data: {
-		tag: 'time'
+		points: []
 	},
 	methods: {
-		next: function(item) {
-			alert(JSON.stringify(item));
+		add: function() {
+			vm.points.push({
+				set: (vm.points[vm.points.length - 1] != undefined && vm.points[vm.points.length - 1].set == 1)? 0: 1,
+			});
+		},
+		submit: function() {
+			debugger;
+			// sync.ref('points').set(vm.points);
 		}
 	}
 });
